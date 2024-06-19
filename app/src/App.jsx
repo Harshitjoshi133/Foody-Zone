@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SearchResults from './components/SearchResults';
-export const BASE_URL="http://localhost:9000"
+//export const BASE_URL="http://localhost:9000"
 const App = () => {
   const[filteredData,setFilteredData]=useState(null);
   const [data,setData]=useState(null);
@@ -12,18 +12,63 @@ const App = () => {
   useEffect(()=>{
     const fetchFoodData = async () => {
       setLoading(true);
+      console.log("Sending request");
       try{
-      const response= await fetch(BASE_URL);
-      const json=await response.json();
+      const response= await fetch("/data");
+      const json=[
+        {
+          "name": "Boilded Egg",
+          "price": 10,
+          "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+          "image": "/images/egg.png",
+          "type": "breakfast"
+        },
+        {
+          "name": "RAMEN",
+          "price": 25,
+          "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+          "image": "/images/ramen.png",
+          "type": "lunch"
+        },
+        {
+          "name": "GRILLED CHICKEN",
+          "price": 45,
+          "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+          "image": "/images/chicken.png",
+          "type": "dinner"
+        },
+        {
+          "name": "CAKE",
+          "price": 18,
+          "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+          "image": "/images/cake.png",
+          "type": "breakfast"
+        },
+        {
+          "name": "BURGER",
+          "price": 23,
+          "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+          "image": "/images/burger.png",
+          "type": "lunch"
+        },
+        {
+          "name": "PANCAKE",
+          "price": 25,
+          "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+          "image": "/images/pancake.png",
+          "type": "dinner"
+        }
+      ];
       
       setData(json);
       console.log(data);
       setFilteredData(json);
       setLoading(false);
-      
+    
     }
       catch(error){
-        setError("unable to fetch data");
+        setError(error);
+        console.log(error);
       }
     };
     fetchFoodData();
@@ -94,7 +139,6 @@ const App = () => {
       {
         filterbtns.map((value)=>(
           <Button key={value.name} 
-          isSelected={selectedButton===value.type}
           onClick={()=>filterFood(value.type)}> 
           {value.name}
           </Button>
@@ -149,8 +193,8 @@ const FilterContainer=styled.section`
 
 export const Button=styled.button`
     padding: 6px 12px;
-    background:${({isSelected})=>(isSelected ?"#FF4040": "#FF4343")};
-    outline:1px solid ${({isSelected})=>(isSelected ?"white": "#FF4343")};
+    /* //background:${({isSelected})=>(isSelected ?"#FF4040": "#FF4343")};
+    //outline:1px solid ${({isSelected})=>(isSelected ?"white": "#FF4343")}; */
     border-radius: 5px;
     border:none;
     color: white;
